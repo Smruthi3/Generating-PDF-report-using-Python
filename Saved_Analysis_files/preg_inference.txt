@@ -1,0 +1,6 @@
+Correlation Strenght: Medium
+
+Segments that are significantly indicative of Success: 6.0-17.0
+
+Segments that are significantly indicative of Failure: 0.0-2.0
+

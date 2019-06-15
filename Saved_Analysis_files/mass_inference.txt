@@ -1,0 +1,6 @@
+Correlation Strenght: Strong
+
+Segments that are significantly indicative of Success: 36.7-67.1
+
+Segments that are significantly indicative of Failure: 0.0-27.3
+
