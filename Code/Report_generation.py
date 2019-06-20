@@ -1,3 +1,4 @@
+## Importing packages 
 from fpdf import FPDF
 from datetime import datetime
 import pandas as pd
@@ -11,7 +12,7 @@ logging.basicConfig()
 logger = logging.getLogger('logger')
 logger.setLevel(logging.INFO)
 
-
+## Exception handler function
 def exceptionHandler(errorCode, methodName, exception):
     exc_type, exc_obj, exc_tb = sys.exc_info()
     fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
@@ -19,12 +20,12 @@ def exceptionHandler(errorCode, methodName, exception):
     failedResponse = {'status': errorCode, 'body': {"methodname": methodName, "exception": str(exception), "traceback":traceback}}
     logger.info(failedResponse)
     return failedResponse
-
+	
+	
+## Function to generate PDF report
 def fun_generate_pdf_report(var_name_list,static_img_loc,location,typ):
     try:
-        from fpdf import FPDF
-        from datetime import datetime
-        import pandas as pd
+	## Class to define header and footer
         class PDF(FPDF):
             def header(self):
                 header_loc=static_img_loc+'header.png'
@@ -64,6 +65,10 @@ def fun_generate_pdf_report(var_name_list,static_img_loc,location,typ):
         pdf.set_text_color(192,80,77)
         pdf.set_font('Arial', 'B', 16)
         pdf.cell(0,30,date)
+		
+		## Rest of the pages in pdf starts here
+		## It is possible that, data may align with the analysis that is being performed, in that case only inference file created with the relavent information
+		## In this case pdf file generated with only two pages, Indtraduction page and error information page
         error=location+'status_inference.txt'
         present=os.path.isfile(error)
         if(present):
@@ -81,6 +86,9 @@ def fun_generate_pdf_report(var_name_list,static_img_loc,location,typ):
             pdf.set_text_color(0,0,0)
             pdf.cell(0,10,txt_data.loc[0,0],0,0,align='L')
         else:
+		 ## Creating the Analysis and insigths pages for all the variables. 
+		 ## In some of the varaibles there may be lot of null values, in those cases no charts and stats files are not generated.
+		 ## Only inference file containing percentage of null info is being displayed in pdf page 
             for i in range(len(var_name_list)):
                 error_var=location+var_name_list[i]+'_Dist.png'
                 exists = os.path.isfile(error_var)
@@ -99,6 +107,7 @@ def fun_generate_pdf_report(var_name_list,static_img_loc,location,typ):
                     divider_line_loc=static_img_loc+'divider_line.PNG'
                     pdf.image(divider_line_loc,w=300)
                     ## image 1
+					## Distribution chart
                     effective_page_width = pdf.w - 2*pdf.l_margin
                     ybefore = pdf.get_y()
                     pdf.set_text_color(0,0,0)
@@ -111,6 +120,9 @@ def fun_generate_pdf_report(var_name_list,static_img_loc,location,typ):
                     pdf.ln(h = 5)
 
                     ## Table
+					## Statistical Tests
+					## In our case there are 3 types of analysis are performed on continuous varaibles and two types of analysis performed on categorical varaibles
+					## To put these information in the pdf , data type is needed to differentiate. 
                     pdf.set_font('Arial', 'U', 15)
                     pdf.cell(40,5,metric2,align='C')
                     pdf.cell(-90)
@@ -147,6 +159,7 @@ def fun_generate_pdf_report(var_name_list,static_img_loc,location,typ):
                         pdf.cell(cell_width[2],5,str(round(values.loc[2,'p Value'],3)) if(values.loc[2,'p Value']!='') else values.loc[2,'p Value'],1,0,align='L')
 
                     ## image 2
+					## Segment analysis
                     pdf.set_xy(effective_page_width/1.5 + pdf.l_margin, ybefore)
                     pdf.set_font('Arial', 'U', 15)
                     pdf.cell(40,6,metric3,align='C')
@@ -155,6 +168,8 @@ def fun_generate_pdf_report(var_name_list,static_img_loc,location,typ):
 
                     ## Inference
                     ## image4
+					## In our case, depending on the analysis, inference varied from 1 line to 3 lines 
+					## To incorportate all infomration ifelse condition is written
                     pdf.ln(h = 98)
                     pdf.set_x(effective_page_width/1.84 + pdf.r_margin)
                     pdf.set_font('Arial', 'U', 15)
@@ -212,12 +227,13 @@ def fun_generate_pdf_report(var_name_list,static_img_loc,location,typ):
                     pdf.set_font('Arial', '', 12)
                     pdf.set_text_color(0,0,0)
                     pdf.cell(0,10,txt_data.loc[0,0],0,0,align='L')
+        ## Saving the pdf report
         report_nm=location+'Analysis_Report'+'.pdf'
         return(pdf.output(name=report_nm, dest='F'))
     except Exception as ex:
         return exceptionHandler('1003', 'Error in fun_generate_pdf_report code', ex)
 
-
+## Calling the main pdf_generation function 
 def pdf_generation(location,analysis_vars):
     try:
         static_img_loc='static_images/'
