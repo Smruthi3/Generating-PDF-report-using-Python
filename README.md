@@ -4,16 +4,16 @@ Install FPDF package using following commond:
 
 pip install fpdf
 
-There are two folders craeted:
+Two folders are created:
 
 One for static images - header,footer and logo
-Second foalde Saved_Analysis_files - images,text files 
+Second for Saving Analysis files - images,text files 
 
 
-pdf_generation is main function takes two arguments:- 
+pdf_generation() function takes two arguments and generate pdf report:- 
 
 1. Location of the analysis charts,text files
 2. Analysis varibales [ It is a dataframe containing the analysis variable name and variable type, refer Inputfile -> Analysis_Vars ]
 
 
-The final output file is svaed in Output foalder
+The final output file is saved in Output folder
