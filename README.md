@@ -1,6 +1,6 @@
 # Generating-PDF-report-using-Python
 
-Install FPDF package using following commond:
+Install FPDF package, type following command in terminal:
 
 pip install fpdf
 
