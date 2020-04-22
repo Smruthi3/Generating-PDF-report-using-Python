@@ -39,4 +39,4 @@ pdf_generation("~/Saved_Analysis_files/",analysis_vars)
 
 The above function return the pdf report and the report gets saved in Saved_Analysis_files folder
 
-For the ease of access the final pdf file is saved in Output folder here
+For easy access the final pdf file is saved in Output folder
