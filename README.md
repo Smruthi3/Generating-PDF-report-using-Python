@@ -4,7 +4,7 @@
 
 FPDF
 
-Install FPDF package, by type following command in terminal:
+Install FPDF package, by typing following command in terminal:
 
 pip install fpdf
 
