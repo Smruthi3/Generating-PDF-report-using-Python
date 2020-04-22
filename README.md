@@ -32,7 +32,9 @@ pdf_generation() function takes two arguments and generate pdf report:-
    
 # Usage
 import pandas as pd
+
 analysis_vars = pd.read_csv("~/Analysis_Vars.csv")
+
 pdf_generation("~/Saved_Analysis_files/",analysis_vars)
 
 The above function return the pdf report and the report gets saved in Saved_Analysis_files folder
