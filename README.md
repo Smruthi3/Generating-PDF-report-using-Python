@@ -19,7 +19,6 @@ Saved_Analysis_files - Contains anlaysis results in the form images,text files (
 
 Note: The name of the Saved_Analysis_files folder can be changed (user choice) 
 
--------------------------------------------------------------------------------------------------------------------------------------
 
 # Output 
 
